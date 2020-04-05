@@ -7,6 +7,7 @@
 
 # system libraries
 import time
+# import sched
 import threading
 
 # for the Adafruit IO API
@@ -59,10 +60,10 @@ def data_send():
 	print("NO2:\t" + str(oxi_data))
 
 	# sends values to API
-	aio.send('eco2-av', eCO2_data)
-	aio.send('tvoc-av', tvoc_data)
-	aio.send('redu-av', redu_data)
-	aio.send('oxi-av', oxi_data)
+	aio.send('eco2-b', eCO2_data)
+	aio.send('tvoc-b', tvoc_data)
+	aio.send('redu-b', redu_data)
+	aio.send('oxi-b', oxi_data)
 
 
 while True:
@@ -75,10 +76,10 @@ while True:
 	print("Time: " + str(time.time()))
 	
 	# receives status of signal from API, prints to terminal
-	UnitB_status = aio.receive('unit-b-status').value
+	UnitB_status = aio.receive('status-b').value
 	print("Unit B Signal State: " + str(UnitB_status))
 	
-	if count == 10:		
+	if count == 10:
 		# creates a thread to allow the data send process to run in parallel
 		data_send_thread = threading.Thread(target = data_send)
 		# starts the thread
