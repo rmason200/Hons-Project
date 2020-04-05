@@ -7,7 +7,6 @@
 
 # system libraries
 import time
-# import sched
 import threading
 
 # for the Adafruit IO API
@@ -79,29 +78,7 @@ while True:
 	UnitB_status = aio.receive('unit-b-status').value
 	print("Unit B Signal State: " + str(UnitB_status))
 	
-	if count == 10:
-		# # reads data from sensors, assigns value to relevant variable
-		# # for SGP30 a simple read
-		# eCO2_data = sgp30.eCO2
-		# tvoc_data = sgp30.TVOC
-		# # for enviroplus, gas readings taken to intermediary variable
-		# enviro_readings = gas.read_all()
-		# # specific reading taken from intermediary variable and assigned to specific variable        
-		# redu_data = enviro_readings.reducing
-		# oxi_data =  enviro_readings.oxidising
-        
-		# # prints values to terminal
-		# print("eCO2:\t\t" + str(eCO2_data))
-		# print("TVOC:\t\t" + str(tvoc_data))
-		# print("Reducing:\t" + str(redu_data))
-		# print("Oxidising:\t" + str(oxi_data))
-        
-		# # sends values to API
-		# aio.send('eco2-av', eCO2_data)
-		# aio.send('tvoc-av', tvoc_data)
-		# aio.send('redu-av', redu_data)
-		# aio.send('oxi-av', oxi_data)
-		
+	if count == 10:		
 		# creates a thread to allow the data send process to run in parallel
 		data_send_thread = threading.Thread(target = data_send)
 		# starts the thread
