@@ -7,7 +7,6 @@
 
 # system libraries
 import time
-# import sched
 import threading
 
 # for the Adafruit IO API
