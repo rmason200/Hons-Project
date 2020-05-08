@@ -24,7 +24,7 @@ from enviroplus import gas
 
 # neccessary definitions for sensors and API
 # defines the username and key for the API
-aio = Client("rmason200", "d5b8d9b68d654dfb965acfb8dc1e7ffd")
+aio = Client("<USERNAME>", "<API KEY>")
 # enables the I2C for the SGP30, defining pin inputs etc
 i2c = busio.I2C(board.SCL, board.SDA, frequency=100000)
 #initialises the SGP30 sensor, defines properties according to adafruit documentation
@@ -307,6 +307,69 @@ def end_sec(): # function to control signal status at each second of the cycle s
 		print("A: " + sts_A)
 		print("B: " + sts_B)
 		
+		
+def warmup(): # function to allow the sensors to warm up before being used adjust cycle
+	# variable to allow warm-up repetitions of cycle
+	reps = 0
+	# global count variable is used to access the global timer
+	global count
+	
+	while reps <= 7: # 7 was selected since 600 (10 minutes) / 90 (minimum allowable cycle time) = 6.7
+		# version of main loop of program for warm-up, with some changes as necessary
+		while count <= cycle_dur: # main loop
+			# sets time variable to ensure loop happens every second
+			# rather than <loop run time> + 1 second
+			start_time = time.time()
+			
+			# run data_send function as a daemon thread
+			data_send_thread = threading.Thread(target = data_send)
+			data_send_thread.start()
+			
+			# if function to run the data_read function when neccesary
+			# the range here works every 10 values of count between the start and end of the cycle
+			if count == count in range(Ss, Ee, 10):
+				# start a thread to run the data_read function as a daemon thread, thread is defined then started
+				data_read_thread = threading.Thread(target = data_read)
+				data_read_thread.start()
+			# data read function is kept to allow sensors to work and warm up
+			
+			# series of if functions to run the relevant function for section of cycle at correct time
+			# convention is when the count value is between the start and end times of the relevant function, the function runs
+			
+			# for cycle start function
+			if count >= Ss and count <= Se:
+				start_sec()
+
+			# for period A function
+			if count >= As and count <= Ae:
+				period_a_sec()
+
+			# for transition function
+			if count >= Ts and count <= Te:
+				transition_sec()
+
+			# for period b function
+			if count >= Bs and count <= Be:
+				period_b_sec()
+
+			# for cycle end function
+			if count >= Es and count <= Ee:
+				end_sec()
+
+			# would normally start the function to adjust cycle times and restart cycle
+			# instead, increments the warm-up repetition counter and starts cycle again
+			if count == cycle_dur:
+				reps += 1
+				count = 0
+
+			# increments loop
+			count += 1
+			# sleeps process for the rest of the second
+			# takes process time and removes it from the second, then sleeps for remaining time
+			time.sleep(1.0 - ((time.time() - start_time) % 60))
+		
+
+		
 
 
 # begin initialising the variables needed for cycle
@@ -369,6 +432,12 @@ tvoc_data_B = []
 redu_data_B = []
 oxi_data_B = []
 
+# warm-up function is run before the main loop to allow sensors to warm up
+warmup()
+
+# reinitialises the counter for main loop
+count = 0
+
 while count <= cycle_dur: # main loop
 	# sets time variable to ensure loop happens every second
 	# rather than <loop run time> + 1 second
@@ -404,16 +473,14 @@ while count <= cycle_dur: # main loop
 	if count >= Bs and count <= Be:
 		period_b_sec()
 
-	# for cycle end function
+	# for cycle end section function
 	if count >= Es and count <= Ee:
 		end_sec()
 
-	
+	# for cycle end function that adjusts cycle times and restarts cycle
 	if count == cycle_dur:
 		cycle_end()
 		count = 0
-		# cycle_end_thread = threading.Thread(target = cycle_end)
-		# cycle_end_thread.start()
 		
 	# increments loop
 	count += 1
