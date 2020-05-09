@@ -351,9 +351,9 @@ def warmup(): # function to allow the sensors to warm up before being used adjus
 
 # begin initialising the variables needed for cycle
 # start with duration of different parts of the cycle 
-cycle_dur = 120 # input("Enter CYCLE TIME in seconds: ")
+cycle_dur = input("Enter CYCLE TIME in seconds: ")
 cycle_dur = int(cycle_dur)
-intergreen = 2 # input("Enter INTERGREEN TIME in seconds: ")
+intergreen = input("Enter INTERGREEN TIME in seconds: ")
 intergreen = int(intergreen)
 cyc_start_dur = 3
 cyc_end_dur = 4
