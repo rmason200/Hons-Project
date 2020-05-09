@@ -35,7 +35,7 @@ sgp30.set_iaq_baseline(0x8973, 0x8aae)
 
 def data_send(): # function to send data to API for Unit B
 	print("Sending data to API...")	
-	# sends the variable 'status_b' to the API feed 'status-b'
+	# sends the variable 'sts_B' to the API feed 'status-b'
 	aio.send('status-b', sts_B)
 	
 
