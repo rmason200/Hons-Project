@@ -102,7 +102,17 @@ def cycle_end(): # function to calculate and reassign new period duration values
 	# find ratios for each emission type
 	# divides each index of the lists
 	ratios = [a/b for a, b in zip(averages_A, averages_B)]
-
+	
+	# series of if functions to ensure each index of list is never over 2
+	if ratios[0] > 2:
+		ratios[0] = 2
+	if ratios[1] > 2:
+		ratios[1] = 2
+	if ratios[2] > 2:
+		ratios[2] = 2
+	if ratios[3] > 2:
+		ratios[3] = 2
+	
 	# find mean value of ratios to find final ratio
 	final_ratio = sum(ratios) / 4
 
