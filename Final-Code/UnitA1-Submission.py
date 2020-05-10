@@ -121,9 +121,6 @@ def cycle_end(): # function to calculate and reassign new period duration values
 	# to allow a decent time available for both phases, the entire phase time is not adjustable
 	# in this instance, half of the available time will be the minimum available, plus the adjusted ratio
 	periodA_dur = (green_split / 4) + ((green_split / 4) * final_ratio)
-	# ensures that period A never exceeds value designed
-	if periodA_dur > (green_split * 0.75):
-		periodA_dur = green_split * 0.75
 	periodB_dur = green_split - periodA_dur
 	# set each value as an integer to ensure cycle time stays in whole seconds
 	periodA_dur = int(periodA_dur)
