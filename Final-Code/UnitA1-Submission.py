@@ -110,7 +110,7 @@ def cycle_end(): # function to calculate and reassign new period duration values
 	# for equal phase times, each phase duration would be half the available green split
 	# to allow a decent time available for both phases, the entire phase time is not adjustable
 	# in this instance, half of the available time will be the minimum available, plus the adjusted ratio
-	periodA_dur = (green_split / 4) + ((green_split / 2) * final_ratio)
+	periodA_dur = (green_split / 4) + ((green_split / 4) * final_ratio)
 	periodB_dur = green_split - periodA_dur
 	# set each value as an integer to ensure cycle time stays in whole seconds
 	periodA_dur = int(periodA_dur)
