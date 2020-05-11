@@ -18,10 +18,6 @@ periodB_dur = int(periodB_dur)
 # print value to terminal
 print("\n\tCYCLE TIME\tINTERGREEN\tGREEN SPLIT\tPERIOD A\tPERIOD B\n\t" + str(cycle_dur) + "\t\t" + str(intergreen) + "\t\t" + str(green_split) + "\t\t" + str(periodA_dur) + "\t\t" + str(periodB_dur) +  "\n")
 
-# defines starting values of the statuses of the lights
-sts_A = 'RED'
-sts_B = 'RED'
-
 # define the start/end times of each stage
 # naming convention
 # Xs = section start
