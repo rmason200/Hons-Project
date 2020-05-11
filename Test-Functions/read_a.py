@@ -10,7 +10,7 @@ from enviroplus import gas
 
 # neccessary definitions for sensors and API
 # defines the username and key for the API
-aio = Client("rmason200", "d5b8d9b68d654dfb965acfb8dc1e7ffd")
+aio = Client("<USERNAME>", "<API KEY>")
 # enables the I2C for the SGP30, defining pin inputs etc
 i2c = busio.I2C(board.SCL, board.SDA, frequency=100000)
 #initialises the SGP30 sensor, defines properties according to adafruit documentation
